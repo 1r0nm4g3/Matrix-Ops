@@ -15,10 +15,10 @@ class Matrix:
         return self.value[x]
 
     def __str__(self):
-        return str(self.value)
+        return str(self.value) #
 
     def __repr__(self):
-        return str(self.value)
+        return str(self.value) #
 
     @staticmethod
     def logical_eval(M1: Matrix, comparison, M2: Union[Matrix, List, int, float]):
@@ -48,7 +48,7 @@ class Matrix:
             return output
 
     @staticmethod
-    def math_eval(M1: Matrix, operation, M2: Matrix):
+    def math_eval(M1: Matrix, operation, M2: Matrix): #
         if isinstance(M2, Matrix):
             Matrix.compare_matrix_size(M1, M2)
 
@@ -79,40 +79,40 @@ class Matrix:
         return self.logical_eval(self, operator.le, M2)
 
     def __ge__(self, M2: Matrix) -> Matrix:
-        return self.logical_eval(self, operator.ge, M2)
+        return self.logical_eval(self, operator.ge, M2) #
 
     def __gt__(self, M2: Matrix) -> Matrix:
-        return self.logical_eval(self, operator.gt, M2)
+        return self.logical_eval(self, operator.gt, M2) #
 
     def __ne__(self, M2: Matrix) -> Matrix:
-        return self.logical_eval(self, operator.ne, M2)
+        return self.logical_eval(self, operator.ne, M2) #
 
     def __add__(self, M2: Matrix) -> Matrix:
-        return self.math_eval(self, operator.add, M2)
+        return self.math_eval(self, operator.add, M2) #
 
     def __sub__(self, M2: Matrix) -> Matrix:
-        return self.math_eval(self, operator.sub, M2)
+        return self.math_eval(self, operator.sub, M2) #
 
     def __mul__(self, M2: Matrix) -> Matrix:
-        return self.math_eval(self, operator.mul, M2)
+        return self.math_eval(self, operator.mul, M2) #
 
     def __div__(self, M2: Matrix) -> Matrix:
-        return self.math_eval(self, operator.div, M2)
+        return self.math_eval(self, operator.div, M2) #
 
     def __floordiv__(self, M2: Matrix) -> Matrix:
-        return self.math_eval(self, operator.floordiv, M2)
+        return self.math_eval(self, operator.floordiv, M2) #
 
     def __neg__(self, M2: Matrix) -> Matrix:
-        return self.math_eval(self, operator.neg, M2)
+        return self.math_eval(self, operator.neg, M2) #
 
     def __or__(self, M2: Matrix) -> Matrix:
-        return self.math_eval(self, operator.or_, M2)
+        return self.math_eval(self, operator.or_, M2) #
 
     def __and__(self, M2: Matrix) -> Matrix:
-        return self.math_eval(self, operator.and_, M2)
+        return self.math_eval(self, operator.and_, M2) #
 
     def __abs__(self):
-        output = Matrix.zero_matrix(self.shape[0], self.shape[1])
+        output = Matrix.zero_matrix(self.shape[0], self.shape[1]) #
         for row in range(self.shape[0]):
             for element in range(self.shape[1]):
                 output[row][element] = abs(self[row][element])
@@ -141,7 +141,7 @@ class Matrix:
             for i in range(M1_shape[0]):
                 for j in range(M2_shape[1]):
                     output[i][j] = sum([M1[i][k]*M2[k][j] for k in range(M1_shape[1])])
-        except TypeError:
+        except TypeError: #
             print("fff")
 
         return output
@@ -173,7 +173,7 @@ class Matrix:
     @staticmethod
     def compare_matrix_size(M1: Matrix, M2: Matrix) -> bool:
         if Matrix.shape(M1) != Matrix.shape(M2):
-            raise Exception(f"Matrices must match size. M1 is {Matrix.shape(M1)} while M2 is {Matrix.shape(M2)}")
+            raise Exception(f"Matrices must match size. M1 is {Matrix.shape(M1)} while M2 is {Matrix.shape(M2)}") #
 
         pass
 
@@ -196,9 +196,9 @@ class Matrix:
                     if len(M[0]) < 1:
                         raise Exception("A matrix must be a list, containing lists, which contain ints or floats.")
                 else:
-                    raise Exception("A matrix must be a list, containing lists, which contain ints or floats.")
+                    raise Exception("A matrix must be a list, containing lists, which contain ints or floats.") #
             else:
-                raise Exception("A matrix must be a list, containing lists, which contain ints or floats.")
+                raise Exception("A matrix must be a list, containing lists, which contain ints or floats.") #
         else:
             if not(isinstance(M, Matrix)):
                 raise Exception("A matrix must be a list, containing lists, which contain ints or floats.")
@@ -240,8 +240,12 @@ class Matrix:
                 new[j][i] = M[i][j]
         return new
 
+    @staticmethod
+    def true_equal(M1: Matrix, M2: Matrix) -> bool:
+        Matrix.compare_matrix_size(M1, M2)
+        for i in range(M1.shape[0]):
+            for j in range(M1.shape[1]):
+                if M1[i][j] != M2[i][j]:
+                    return False
 
-M1 = Matrix([[1, 2, 3], [0, 4, 6]])
-M2 = Matrix([[1, 2, 4], [4, 5, 6]])
-M3 = Matrix([[-2, -3, -4], [-5, 12, 14]])
-M4 = Matrix([[2, 3], [1, 1], [0, 4]])
+        return True

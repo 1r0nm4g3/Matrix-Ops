@@ -1,7 +1,42 @@
 from matrix_ops.matrix_ops import Matrix
 import pytest
 
-M1 = Matrix([[1, 2, 3], [0, 4, 6]])
+@pytest.mark.parametrize("M1, M2, M3, result", [
+    (Matrix([[1, 2, 3], [4, 5, 6]]), Matrix([[1, 2, 3], [4, 5, 6]]), [[1, 1, 1], [1, 1, 1]], True),
+    (Matrix([[0, 0, 0], [0, 0, 0]]), Matrix([[1, 2, 3], [4, 5, 6]]), [[0, 0, 0], [0, 0, 0]], True),
+    (Matrix([[7, 2, 4], [4, 8, 9]]), Matrix([[9, 3, 1], [4, 2, 9]]), [[0, 0, 0], [1, 0, 1]], True),
+    (Matrix([[1, 2, 2], [2, 2, 3]]), 2, [[0, 1, 1], [1, 1, 0]], True),
+    (Matrix([[1]]), 1, [[1]], True),
+    (Matrix([[10, 22], [-3, 4]]), -3, [[0, 0], [1, 0]], True),
+    (Matrix([[3, 2, 5], [9, 2, 4]]), Matrix([[8, 3, 5], [4, 2, 4]]), [[1, 1, 0], [1, 0, 1]], False)
+])
+
+def test_eq(M1, M2, M3, result):
+    assert Matrix.true_equal((M1 == M2), Matrix(M3)) == result
+
+@pytest.mark.parametrize("M1, M2, M3, result", [
+    (Matrix([[1, 2, 3], [4, 5, 6]]), Matrix([[1, 2, 3], [4, 5, 6]]), [[0, 0, 0], [0, 0, 0]], True),
+    (Matrix([[0, 0, 0], [0, 0, 0]]), Matrix([[1, 2, 3], [4, 5, 6]]), [[1, 1, 1], [1, 1, 1]], True),
+    (Matrix([[7, 2, 4], [4, 8, 9]]), Matrix([[9, 3, 1], [4, 2, 9]]), [[1, 1, 0], [0, 0, 0]], True),
+    (Matrix([[1, 2, 2], [2, 2, 3]]), 2, [[1, 0, 0], [0, 0, 0]], True),
+    (Matrix([[1]]), 1, [[0]], True),
+    (Matrix([[10, 22], [-3, 4]]), 4, [[0, 0], [1, 0]], True),
+    (Matrix([[3, 2, 5], [9, 2, 4]]), Matrix([[8, 3, 5], [4, 2, 4]]), [[1, 1, 0], [1, 0, 1]], False)
+])
+def test_lt(M1, M2, M3, result):
+    assert Matrix.true_equal((M1 < M2), Matrix(M3)) == result
+
+@pytest.mark.parametrize("M1, M2, M3, result", [
+    (Matrix([[1, 2, 3], [4, 5, 6]]), Matrix([[1, 2, 3], [4, 5, 6]]), [[1, 1, 1], [1, 1, 1]], True),
+    (Matrix([[0, 0, 0], [0, 0, 0]]), Matrix([[1, 2, 3], [4, 5, 6]]), [[1, 1, 1], [1, 1, 1]], True),
+    (Matrix([[7, 2, 4], [4, 8, 9]]), Matrix([[9, 3, 1], [4, 2, 9]]), [[1, 1, 0], [1, 0, 1]], True),
+    (Matrix([[1, 2, 2], [2, 2, 3]]), 2, [[1, 1, 1], [1, 1, 0]], True),
+    (Matrix([[1]]), 1, [[1]], True),
+    (Matrix([[10, 22], [-3, 4]]), 4, [[0, 0], [1, 1]], True),
+    (Matrix([[3, 2, 5], [9, 2, 4]]), Matrix([[8, 3, 5], [4, 2, 4]]), [[1, 1, 0], [1, 0, 1]], False)
+])
+def test_le(M1, M2, M3, result):
+    assert Matrix.true_equal((M1 <= M2), Matrix(M3)) == result
 
 def test_zero_matrix():
     # Test that the output is the correct size.
